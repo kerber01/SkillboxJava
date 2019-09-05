@@ -4,7 +4,7 @@ public class Cat {
   private double weight;
   private double foodAmount;
   private static int count;
-  private String color;
+  private Color color;
   private final double MIN_WEIGHT = 1000;
   private final double MAX_WEIGHT = 9000;
   private final int EYES_COUNT = 2;
@@ -13,7 +13,7 @@ public class Cat {
     weight = 1500.0 + 3000.0 * Math.random();
     originWeight = weight;
     foodAmount = 0.0;
-    color = Color.getRandomColor().toString();
+    color = Color.getRandomColor();
     count++;
   }
 
@@ -23,6 +23,35 @@ public class Cat {
     originWeight = weight;
     if (!isAlive()){
       count--;
+    }
+
+  }
+
+
+
+  public Cat (Cat cat)
+  {
+    this(cat.getWeight());
+    this.setFoodAmount(cat.getFoodAmount());
+    this.setColor(cat.getColor());
+    this.originWeight = cat.originWeight;
+  }
+
+  public static Cat copy(Cat cat)
+  {
+    return cat.copy();
+  }
+
+  public Cat copy()
+  {
+    if (isAlive())
+    {
+      return new Cat(this);
+    }
+    else
+    {
+      System.out.println("You've just copied a dead cat");
+      return new Cat(this);
     }
 
   }
@@ -67,11 +96,19 @@ public class Cat {
     }
   }
 
+  private void setFoodAmount(double foodAmount) {
+    this.foodAmount = foodAmount;
+  }
+
+  private void setColor(Color color) {
+    this.color = color;
+  }
+
   public Double getWeight() {
     return weight;
   }
 
-  public String getColor() {
+  public Color getColor() {
     return color;
   }
 
