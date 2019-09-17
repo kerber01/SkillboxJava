@@ -25,6 +25,7 @@ public class Main
             System.out.println(employee);
         }
 
+
     }
 
     private static ArrayList<Employee> loadStaffFromFile()
