@@ -9,7 +9,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageViewManager">
-    <option name="myElementSize" value="181" />
+    <option name="myElementSize" value="176" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -60,7 +60,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.All in spb-metro">
+  <component name="RunManager" selected="JUnit.RouteCalculatorTest.test_calculate_duration_on_the_line">
     <configuration name="All in spb-metro" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="spb-metro" />
       <option name="PACKAGE_NAME" value="" />
@@ -98,11 +98,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RouteCalculatorTest.test_get_shortest_route_with_two_connections" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RouteCalculatorTest.test_calculate_duration_two_connections" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="spb-metro" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="RouteCalculatorTest" />
-      <option name="METHOD_NAME" value="test_get_shortest_route_with_two_connections" />
+      <option name="METHOD_NAME" value="test_calculate_duration_two_connections" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -111,17 +111,17 @@
     <list>
       <item itemvalue="JUnit.All in spb-metro" />
       <item itemvalue="JUnit.RouteCalculatorTest" />
-      <item itemvalue="JUnit.RouteCalculatorTest.test_get_shortest_route_with_two_connections" />
       <item itemvalue="JUnit.RouteCalculatorTest.test_calculate_duration_on_the_line" />
       <item itemvalue="JUnit.RouteCalculatorTest.test_calculate_duration_one_connection" />
+      <item itemvalue="JUnit.RouteCalculatorTest.test_calculate_duration_two_connections" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in spb-metro" />
-        <item itemvalue="JUnit.RouteCalculatorTest.test_calculate_duration_one_connection" />
         <item itemvalue="JUnit.RouteCalculatorTest.test_calculate_duration_on_the_line" />
-        <item itemvalue="JUnit.RouteCalculatorTest.test_get_shortest_route_with_two_connections" />
+        <item itemvalue="JUnit.All in spb-metro" />
+        <item itemvalue="JUnit.RouteCalculatorTest.test_calculate_duration_two_connections" />
         <item itemvalue="JUnit.RouteCalculatorTest" />
+        <item itemvalue="JUnit.RouteCalculatorTest.test_calculate_duration_one_connection" />
       </list>
     </recent_temporary>
   </component>
@@ -152,7 +152,7 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/SPBMetro$All_in_spb_metro.ic" NAME="All in spb-metro Coverage Results" MODIFIED="1568979400969" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/SPBMetro$All_in_spb_metro.ic" NAME="All in spb-metro Coverage Results" MODIFIED="1569673418549" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/SPBMetro$RouteCalculatorTest_testGetRouteWithOneConnection.ic" NAME="RouteCalculatorTest.testGetRouteWithOneConnection Coverage Results" MODIFIED="1568973525084" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

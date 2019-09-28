@@ -17,17 +17,21 @@ public class RouteCalculator {
   }
 
   public List<Station> getShortestRoute(Station from, Station to) {
-    List<Station> route = getRouteOnTheLine(from, to);
-    if (route != null) {
-      return route;
-    }
+    List<Station> route;
+    if (from.getLine().equals(to.getLine())) {
+      route = getRouteOnTheLine(from, to);
+      if (route != null) {
+        return route;
+      }
+    } else {
 
-    route = getRouteWithOneConnection(from, to);
-    if (route != null) {
-      return route;
-    }
+      route = getRouteWithOneConnection(from, to);
+      if (route != null) {
+        return route;
+      }
 
-    route = getRouteWithTwoConnections(from, to);
+      route = getRouteWithTwoConnections(from, to);
+    }
     return route;
   }
 
@@ -48,9 +52,9 @@ public class RouteCalculator {
   //=========================================================================
 
   private List<Station> getRouteOnTheLine(Station from, Station to) {
-    if (!from.getLine().equals(to.getLine())) {
-      return null;
-    }
+//    if (!from.getLine().equals(to.getLine())) {
+//      return null;
+//    }
     ArrayList<Station> route = new ArrayList<>();
     List<Station> stations = from.getLine().getStations();
     int direction = 0;
@@ -79,9 +83,9 @@ public class RouteCalculator {
   }
 
   private List<Station> getRouteWithOneConnection(Station from, Station to) {
-    if (from.getLine().equals(to.getLine())) {
-      return null;
-    }
+//    if (from.getLine().equals(to.getLine())) {
+//      return null;
+//    }
 
     ArrayList<Station> route = new ArrayList<>();
 
@@ -117,20 +121,22 @@ public class RouteCalculator {
   private List<Station> getRouteViaConnectedLine(Station from, Station to) {
     Set<Station> fromConnected = stationIndex.getConnectedStations(from);
     Set<Station> toConnected = stationIndex.getConnectedStations(to);
+    List<Station> route = null;
+
     for (Station srcStation : fromConnected) {
       for (Station dstStation : toConnected) {
         if (srcStation.getLine().equals(dstStation.getLine())) {
-          return getRouteOnTheLine(srcStation, dstStation);
+          route = getRouteOnTheLine(srcStation, dstStation);
         }
       }
     }
-    return null;
+    return route;
   }
 
   private List<Station> getRouteWithTwoConnections(Station from, Station to) {
-    if (from.getLine().equals(to.getLine())) {
-      return null;
-    }
+//    if (from.getLine().equals(to.getLine())) {
+//      return null;
+//    }
 
     ArrayList<Station> route = new ArrayList<>();
 

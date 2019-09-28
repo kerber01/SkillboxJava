@@ -17,6 +17,7 @@ public class RouteCalculatorTest extends TestCase {
   ArrayList<Station> expectedOnTheLineRoute;
   ArrayList<Station> expectedOneConnectionRoute;
   ArrayList<Station> expectedTwoConnectionsRoute;
+  StationIndex stationIndex;
 
   @Before
   @Override
@@ -59,7 +60,7 @@ public class RouteCalculatorTest extends TestCase {
 
     //-----------------------------------------
 
-    StationIndex stationIndex = new StationIndex();
+    stationIndex = new StationIndex();
     stationIndex.addLine(redLine);
     stationIndex.addLine(blueLine);
     stationIndex.addLine(whiteLine);
@@ -83,28 +84,15 @@ public class RouteCalculatorTest extends TestCase {
 
     routeCalculator = new RouteCalculator(stationIndex);
 
-    expectedOnTheLineRoute = new ArrayList<>();
-    expectedOnTheLineRoute.add(blueStations.get(3));
-    expectedOnTheLineRoute.add(blueStations.get(2));
-    expectedOnTheLineRoute.add(blueStations.get(1));
-    expectedOnTheLineRoute.add(blueStations.get(0));
+  }
 
-    expectedOneConnectionRoute = new ArrayList<>();
-    expectedOneConnectionRoute.add(redStations.get(2));
-    expectedOneConnectionRoute.add(redStations.get(3));
-    expectedOneConnectionRoute.add(blueStations.get(1));
-    expectedOneConnectionRoute.add(blueStations.get(0));
+  public List<Station> getStationList(String... s) {
+    List<Station> expected = new ArrayList<>();
+    for (int i = 0; i < s.length; i++) {
+      expected.add(stationIndex.getStation(s[i]));
+    }
 
-    expectedTwoConnectionsRoute = new ArrayList<>();
-    expectedTwoConnectionsRoute.add(whiteStations.get(1));
-    expectedTwoConnectionsRoute.add(whiteStations.get(0));
-    expectedTwoConnectionsRoute.add(blueStations.get(3));
-    expectedTwoConnectionsRoute.add(blueStations.get(2));
-    expectedTwoConnectionsRoute.add(blueStations.get(1));
-    expectedTwoConnectionsRoute.add(redStations.get(3));
-    expectedTwoConnectionsRoute.add(redStations.get(2));
-    expectedTwoConnectionsRoute.add(redStations.get(1));
-
+    return expected;
   }
 
   @After
@@ -120,31 +108,40 @@ public class RouteCalculatorTest extends TestCase {
   }
 
   public void test_calculate_duration_on_the_line() {
-    assertEquals(7.5, RouteCalculator.calculateDuration(expectedOnTheLineRoute));
+    assertEquals(7.5, RouteCalculator.calculateDuration(
+        getStationList("Могилевская", "Тракторный завод", "Купаловская", "Автозаводская")));
   }
 
   public void test_calculate_duration_one_connection() {
-    assertEquals(8.5, RouteCalculator.calculateDuration(expectedOneConnectionRoute));
+    assertEquals(8.5, RouteCalculator.calculateDuration(
+        getStationList("Восток", "Октябрьская", "Купаловская", "Автозаводская")));
   }
 
   public void test_calculate_duration_two_connections() {
-    assertEquals(19.5, RouteCalculator.calculateDuration(expectedTwoConnectionsRoute));
+    assertEquals(19.5, RouteCalculator.calculateDuration(
+        getStationList("Навохо-доносорово", "Космодесантская", "Могилевская", "Тракторный завод",
+            "Купаловская", "Октябрьская", "Восток", "Борисовский тракт")));
   }
 
 
   public void test_get_shortest_route_on_the_line() {
-    assertEquals(expectedOnTheLineRoute,
-        routeCalculator.getShortestRoute(blueStations.get(3), blueStations.get(0)));
+    assertEquals(getStationList("Могилевская", "Тракторный завод", "Купаловская", "Автозаводская"),
+        routeCalculator.getShortestRoute(stationIndex.getStation("Могилевская"),
+            stationIndex.getStation("Автозаводская")));
   }
 
   public void test_get_shortest_route_with_one_connection() {
-    assertEquals(expectedOneConnectionRoute,
-        routeCalculator.getShortestRoute(redStations.get(2), blueStations.get(0)));
+    assertEquals(getStationList("Восток", "Октябрьская", "Купаловская", "Автозаводская"),
+        routeCalculator.getShortestRoute(stationIndex.getStation("Восток"),
+            stationIndex.getStation("Автозаводская")));
   }
 
   public void test_get_shortest_route_with_two_connections() {
-    assertEquals(expectedTwoConnectionsRoute,
-        routeCalculator.getShortestRoute(whiteStations.get(1), redStations.get(1)));
+    assertEquals(
+        getStationList("Навохо-доносорово", "Космодесантская", "Могилевская", "Тракторный завод",
+            "Купаловская", "Октябрьская", "Восток", "Борисовский тракт"),
+        routeCalculator.getShortestRoute(stationIndex.getStation("Навохо-доносорово"),
+            stationIndex.getStation("Борисовский тракт")));
   }
 
 
