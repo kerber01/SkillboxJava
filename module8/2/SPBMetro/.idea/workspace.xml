@@ -60,7 +60,14 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.RouteCalculatorTest.test_calculate_duration_on_the_line">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="spb-metro" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="All in spb-metro" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="spb-metro" />
       <option name="PACKAGE_NAME" value="" />
@@ -88,16 +95,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RouteCalculatorTest.test_calculate_duration_one_connection" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="spb-metro" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="RouteCalculatorTest" />
-      <option name="METHOD_NAME" value="test_calculate_duration_one_connection" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="RouteCalculatorTest.test_calculate_duration_two_connections" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="spb-metro" />
       <option name="PACKAGE_NAME" value="" />
@@ -112,16 +109,16 @@
       <item itemvalue="JUnit.All in spb-metro" />
       <item itemvalue="JUnit.RouteCalculatorTest" />
       <item itemvalue="JUnit.RouteCalculatorTest.test_calculate_duration_on_the_line" />
-      <item itemvalue="JUnit.RouteCalculatorTest.test_calculate_duration_one_connection" />
       <item itemvalue="JUnit.RouteCalculatorTest.test_calculate_duration_two_connections" />
+      <item itemvalue="Application.Main" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.RouteCalculatorTest.test_calculate_duration_on_the_line" />
         <item itemvalue="JUnit.All in spb-metro" />
         <item itemvalue="JUnit.RouteCalculatorTest.test_calculate_duration_two_connections" />
         <item itemvalue="JUnit.RouteCalculatorTest" />
-        <item itemvalue="JUnit.RouteCalculatorTest.test_calculate_duration_one_connection" />
       </list>
     </recent_temporary>
   </component>
@@ -137,6 +134,9 @@
       <updated>1559569584327</updated>
     </task>
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
