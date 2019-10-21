@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -14,7 +15,7 @@ public class Student {
     private LocalDateTime registrationDate;
 
     @OneToMany(mappedBy = "student")
-    private List<Subscription> subscriptionList;
+    private Set<Subscription> subscriptionList;
 
     public Student() {
     }
@@ -52,11 +53,11 @@ public class Student {
         this.registrationDate = registrationDate;
     }
 
-    public List<Subscription> getSubscriptionList() {
+    public Set<Subscription> getSubscriptionList() {
         return subscriptionList;
     }
 
-    public void setSubscriptionList(List<Subscription> subscriptionList) {
+    public void setSubscriptionList(Set<Subscription> subscriptionList) {
         this.subscriptionList = subscriptionList;
     }
 

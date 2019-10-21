@@ -15,8 +15,7 @@ public class Loader {
              Session session = factory.openSession()) {
             Transaction transaction = session.beginTransaction();
 
-//            Student student = session.get(Student.class, 5);
-//            student.getSubscriptionList().forEach(System.out::println);
+            
             Student boris = new Student();
             boris.setRegistrationDate(LocalDateTime.now());
             boris.setName("Борис");

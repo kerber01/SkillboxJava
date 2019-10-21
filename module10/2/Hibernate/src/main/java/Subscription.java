@@ -69,6 +69,21 @@ public class Subscription {
                 ", course=" + course.getName() +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Subscription that = (Subscription) o;
+        return Objects.equals(subscriptionDate, that.subscriptionDate) &&
+                Objects.equals(student, that.student) &&
+                Objects.equals(course, that.course);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(subscriptionDate, student, course);
+    }
 }
 
 @Embeddable

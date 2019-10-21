@@ -1,5 +1,6 @@
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Courses")
@@ -29,7 +30,7 @@ public class Course {
     private float pricePerHour;
 
     @OneToMany(mappedBy = "course")
-    private List<Subscription> subscriptionList;
+    private Set<Subscription> subscriptionList;
 
     public Course() {
     }
@@ -107,11 +108,11 @@ public class Course {
         this.pricePerHour = pricePerHour;
     }
 
-    public List<Subscription> getSubscriptionList() {
+    public Set<Subscription> getSubscriptionList() {
         return subscriptionList;
     }
 
-    public void setSubscriptionList(List<Subscription> subscriptionList) {
+    public void setSubscriptionList(Set<Subscription> subscriptionList) {
         this.subscriptionList = subscriptionList;
     }
 }
