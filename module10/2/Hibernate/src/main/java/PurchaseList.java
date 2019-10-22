@@ -9,6 +9,20 @@ public class PurchaseList {
     @EmbeddedId
     PurchaseListId id;
 
+//    @Column(name = "student_id")
+//    private Integer studentId;
+//
+//    @Column(name = "course_id")
+//    private Integer courseId;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", insertable = false, updatable = false)
+    private Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id", insertable = false, updatable = false)
+    private Course course;
+
     private int price;
     @Column(name = "subscription_date")
     private LocalDateTime subscriptionDate;
@@ -16,10 +30,36 @@ public class PurchaseList {
     public PurchaseList() {
     }
 
-    public PurchaseList(PurchaseListId id, int price, LocalDateTime subscriptionDate) {
-        this.id = id;
-        this.price = price;
-        this.subscriptionDate = subscriptionDate;
+//    public Integer getStudentId() {
+//        return studentId;
+//    }
+//
+//    public void setStudentId(Integer studentId) {
+//        this.studentId = studentId;
+//    }
+//
+//    public Integer getCourseId() {
+//        return courseId;
+//    }
+//
+//    public void setCourseId(Integer courseId) {
+//        this.courseId = courseId;
+//    }
+
+        public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public PurchaseListId getId() {
@@ -44,6 +84,22 @@ public class PurchaseList {
 
     public void setSubscriptionDate(LocalDateTime subscriptionDate) {
         this.subscriptionDate = subscriptionDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PurchaseList that = (PurchaseList) o;
+        return price == that.price &&
+                Objects.equals(student, that.student) &&
+                Objects.equals(course, that.course) &&
+                Objects.equals(subscriptionDate, that.subscriptionDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(student, course, price, subscriptionDate);
     }
 }
 @Embeddable

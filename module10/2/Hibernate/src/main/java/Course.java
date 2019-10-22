@@ -32,6 +32,9 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private Set<Subscription> subscriptionList;
 
+    @OneToMany(mappedBy = "course")
+    private Set<PurchaseList> purchaseList;
+
     public Course() {
     }
 

@@ -1,9 +1,12 @@
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import javax.persistence.criteria.CriteriaQuery;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Loader {
 
@@ -15,32 +18,29 @@ public class Loader {
              Session session = factory.openSession()) {
             Transaction transaction = session.beginTransaction();
 
-            
-            Student boris = new Student();
-            boris.setRegistrationDate(LocalDateTime.now());
-            boris.setName("Борис");
-
-            session.save(boris);
+//            CriteriaQuery<Subscription> subscriptionCriteriaQuery = session.getCriteriaBuilder().createQuery(Subscription.class);
+//            subscriptionCriteriaQuery.from(Subscription.class);
+//
+//            List<Subscription> subscriptionsList = session.createQuery(subscriptionCriteriaQuery).getResultList();
+//
+//            CriteriaQuery<PurchaseList> purchaseListCriteriaQuery = session.getCriteriaBuilder().createQuery(PurchaseList.class);
+//            purchaseListCriteriaQuery.from(PurchaseList.class);
+//
+//            List<PurchaseList> purchaseLists = session.createQuery(purchaseListCriteriaQuery).getResultList();
+//
+//            for (Subscription s: subscriptionsList){
+//                for (PurchaseList p: purchaseLists){
+//                    if (p.getStudentId() == null && s.getStudent().getName().equals(p.getId().getStudentName())){
+//                        p.setStudentId(s.getStudent().getId());
+//                    }
+//                    if (p.getCourseId() == null && s.getCourse().getName().equals(p.getId().getCourseName())){
+//                        p.setCourseId(s.getCourse().getId());
+//                    }
+//                }
+//            }
 
             transaction.commit();
 
-            Transaction newCourse = session.beginTransaction();
-
-            Course course = new Course();
-            course.setType(CourseType.PROGRAMMING);
-            course.setName("Прокрастинация от 0 до ПРО");
-
-            session.save(course);
-            newCourse.commit();
-
-            Transaction newSub = session.beginTransaction();
-            Subscription subscription = new Subscription(new SubscriptionId(boris.getId(), course.getId()), LocalDateTime.now(), boris, course);
-            session.save(subscription);
-            newSub.commit();
-
-            Transaction last = session.beginTransaction();
-            System.out.println(session.get(Subscription.class, subscription.getId()).getStudent().getName());
-            last.commit();
 
         } catch (Exception e) {
             e.printStackTrace();
