@@ -11,7 +11,7 @@ public class Teacher {
     private int salary;
     private int age;
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
     private List<Course> courseList;
 
     public Teacher() {

@@ -17,8 +17,8 @@ public class Student {
     @OneToMany(mappedBy = "student")
     private Set<Subscription> subscriptionList;
 
-    @OneToMany(mappedBy = "student")
-    private Set<PurchaseList> purchaseList;
+//    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+//    private Set<PurchaseList> purchaseList;
 
     public Student() {
     }

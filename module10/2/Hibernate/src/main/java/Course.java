@@ -19,7 +19,7 @@ public class Course {
 
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
@@ -29,11 +29,11 @@ public class Course {
     @Column(name = "price_per_hour")
     private float pricePerHour;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private Set<Subscription> subscriptionList;
 
-    @OneToMany(mappedBy = "course")
-    private Set<PurchaseList> purchaseList;
+//    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+//    private Set<PurchaseList> purchaseList;
 
     public Course() {
     }

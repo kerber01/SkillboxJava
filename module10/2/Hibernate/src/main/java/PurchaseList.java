@@ -9,19 +9,19 @@ public class PurchaseList {
     @EmbeddedId
     PurchaseListId id;
 
-//    @Column(name = "student_id")
-//    private Integer studentId;
+    @Column(name = "student_id")
+    private Integer studentId;
+
+    @Column(name = "course_id")
+    private Integer courseId;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "student_id", insertable = false, updatable = false)
+//    private Student student;
 //
-//    @Column(name = "course_id")
-//    private Integer courseId;
-
-    @ManyToOne
-    @JoinColumn(name = "student_id", insertable = false, updatable = false)
-    private Student student;
-
-    @ManyToOne
-    @JoinColumn(name = "course_id", insertable = false, updatable = false)
-    private Course course;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "course_id", insertable = false, updatable = false)
+//    private Course course;
 
     private int price;
     @Column(name = "subscription_date")
@@ -30,37 +30,37 @@ public class PurchaseList {
     public PurchaseList() {
     }
 
-//    public Integer getStudentId() {
-//        return studentId;
+    public Integer getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Integer studentId) {
+        this.studentId = studentId;
+    }
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+
+//        public Student getStudent() {
+//        return student;
 //    }
 //
-//    public void setStudentId(Integer studentId) {
-//        this.studentId = studentId;
+//    public void setStudent(Student student) {
+//        this.student = student;
 //    }
 //
-//    public Integer getCourseId() {
-//        return courseId;
+//    public Course getCourse() {
+//        return course;
 //    }
 //
-//    public void setCourseId(Integer courseId) {
-//        this.courseId = courseId;
+//    public void setCourse(Course course) {
+//        this.course = course;
 //    }
-
-        public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
 
     public PurchaseListId getId() {
         return id;
@@ -86,21 +86,21 @@ public class PurchaseList {
         this.subscriptionDate = subscriptionDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PurchaseList that = (PurchaseList) o;
-        return price == that.price &&
-                Objects.equals(student, that.student) &&
-                Objects.equals(course, that.course) &&
-                Objects.equals(subscriptionDate, that.subscriptionDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(student, course, price, subscriptionDate);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        PurchaseList that = (PurchaseList) o;
+//        return price == that.price &&
+//                Objects.equals(student, that.student) &&
+//                Objects.equals(course, that.course) &&
+//                Objects.equals(subscriptionDate, that.subscriptionDate);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(student, course, price, subscriptionDate);
+//    }
 }
 @Embeddable
 class PurchaseListId implements Serializable {
