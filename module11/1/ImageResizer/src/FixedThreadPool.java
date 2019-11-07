@@ -1,79 +1,69 @@
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
 
 public class FixedThreadPool {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         String srcFolder = "D:/src";
         String dstFolder = "D:/dst";
 
-        int processors = 12;
-            //Runtime.getRuntime().availableProcessors();
+        int processors = Runtime.getRuntime().availableProcessors();
         System.out.println("CPU cores: " + processors);
 
         File srcDir = new File(srcFolder);
 
-        long start = System.currentTimeMillis();
 
-        File[] filesArray = srcDir.listFiles();
-        int len = filesArray.length / processors;
-
+        File[] files = srcDir.listFiles();
+        if (files == null) {
+            for (; ; ) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                System.out.println("Wrong source folder, enter another path:");
+                files = new File(reader.readLine().trim()).listFiles();
+                if (files != null) {
+                    break;
+                }
+            }
+        }
+        final CountDownLatch latch = new CountDownLatch(files.length);
         ExecutorService service = Executors.newFixedThreadPool(processors);
 
-        for (int i = 0; i < processors; i++) {
-            File[] files;
-            if (i == processors - 1 && processors != 1) {
-                files = new File[filesArray.length - len * i];
-            } else {
-                files = new File[len];
-            }
-            System.arraycopy(filesArray, len * i, files, 0, files.length);
+        Map<Integer, ArrayList<File>> sortedMap = FilesSorter
+            .sortFilesBySize(files, 1);
 
-            int finalI = i;
-
-
-
-            service.execute(() -> {
+        long start = System.currentTimeMillis();
+        for (File file : sortedMap.get(0)) {
+            service.submit(() -> {
                 try {
-                    for (File file : files) {
-                        BufferedImage image = ImageIO.read(file);
-                        if (image == null) {
-                            continue;
-                        }
-
-                        int newWidth = 300;
-                        int newHeight = (int) Math.round(
-                            image.getHeight() / (image.getWidth() / (double) newWidth)
-                        );
-                        BufferedImage newImage = new BufferedImage(
-                            newWidth, newHeight, BufferedImage.TYPE_INT_RGB
-                        );
-
-                        int widthStep = image.getWidth() / newWidth;
-                        int heightStep = image.getHeight() / newHeight;
-
-                        for (int x = 0; x < newWidth; x++) {
-                            for (int y = 0; y < newHeight; y++) {
-                                int rgb = image.getRGB(x * widthStep, y * heightStep);
-                                newImage.setRGB(x, y, rgb);
-                            }
-                        }
-
-                        File newFile = new File(dstFolder + "/" + file.getName());
-                        ImageIO.write(newImage, "jpg", newFile);
-                        System.out.println("Thread " + (finalI+1) );
+                    BufferedImage image = ImageIO.read(file);
+                    if (image == null) {
+                        service.shutdown();
                     }
+
+                    Main.imageResize(image, dstFolder, file);
+                    System.out.println("Thread started");
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-                System.out.println("Thread " + (finalI+1) + " duration: " + (System.currentTimeMillis() - start));
+                System.out
+                    .println("Thread " + " duration: " + (System.currentTimeMillis() - start));
+                latch.countDown();
             });
         }
+
         service.shutdown();
+        latch.await();
+        System.out.println("Total duration: " + (System.currentTimeMillis() - start));
 
     }
 }
