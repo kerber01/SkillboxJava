@@ -57,7 +57,8 @@ public class BankTest extends TestCase {
                 e.printStackTrace();
             }
         });
-        executorService.awaitTermination(5, TimeUnit.SECONDS);
+        executorService.shutdown();
+        executorService.awaitTermination(1, TimeUnit.HOURS);
         if (accounts.get(keySet.get(0)).isBlocked() || accounts.get(keySet.get(1)).isBlocked()) {
             assertEquals(100000, accounts.get(keySet.get(0)).getMoney());
             assertEquals(100000, accounts.get(keySet.get(1)).getMoney());
@@ -66,7 +67,6 @@ public class BankTest extends TestCase {
             assertEquals(100000, accounts.get(keySet.get(1)).getMoney());
             assertEquals(151000, accounts.get(keySet.get(2)).getMoney());
         }
-        executorService.shutdown();
 
 
     }

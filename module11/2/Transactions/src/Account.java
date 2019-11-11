@@ -30,7 +30,7 @@ public class Account implements Comparable<Account> {
         return money;
     }
 
-    public void giveTransfer(long transferAmount) throws InterruptedException {
+    public synchronized void giveTransfer(long transferAmount) throws InterruptedException {
         if (!this.isBlocked) {
             if (money <= 0) {
                 System.out.println(this.getAccNumber() + " Account balance is to low");
@@ -45,7 +45,7 @@ public class Account implements Comparable<Account> {
         }
     }
 
-    public void receiveTransfer(long transferAmount) {
+    public  synchronized void receiveTransfer(long transferAmount) {
         if (!this.isBlocked) {
             this.money += transferAmount;
         } else {
