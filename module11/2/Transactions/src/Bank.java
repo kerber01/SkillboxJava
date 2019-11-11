@@ -7,6 +7,10 @@ public class Bank {
     private ConcurrentHashMap<String, Account> accounts;
     private final Random random = new Random();
 
+    public Bank(ConcurrentHashMap<String, Account> accounts) {
+        this.accounts = accounts;
+    }
+
     public synchronized boolean isFraud(String fromAccountNum, String toAccountNum, long amount)
         throws InterruptedException {
         Thread.sleep(1000);

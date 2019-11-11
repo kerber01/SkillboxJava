@@ -19,7 +19,7 @@ public class BankTest extends TestCase {
     @Before
     public void setUp() throws InterruptedException {
         accounts = new ConcurrentHashMap<>();
-        bank = new Bank();
+        bank = new Bank(accounts);
         keySet = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             Account account = new Account();
@@ -28,6 +28,7 @@ public class BankTest extends TestCase {
         for (String s : accounts.keySet()) {
             keySet.add(s);
         }
+
 
     }
 
@@ -59,10 +60,10 @@ public class BankTest extends TestCase {
         });
         executorService.shutdown();
         executorService.awaitTermination(1, TimeUnit.HOURS);
-        if (accounts.get(keySet.get(0)).isBlocked() || accounts.get(keySet.get(1)).isBlocked()) {
+        if (accounts.get(keySet.get(0)).isBlocked() && accounts.get(keySet.get(1)).isBlocked()) {
             assertEquals(100000, accounts.get(keySet.get(0)).getMoney());
             assertEquals(100000, accounts.get(keySet.get(1)).getMoney());
-        } else {
+        } else if (!accounts.get(keySet.get(0)).isBlocked() && !accounts.get(keySet.get(1)).isBlocked()){
             assertEquals(49000, accounts.get(keySet.get(0)).getMoney());
             assertEquals(100000, accounts.get(keySet.get(1)).getMoney());
             assertEquals(151000, accounts.get(keySet.get(2)).getMoney());
