@@ -2,6 +2,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -23,7 +24,7 @@ public class BankTest extends TestCase {
         String fromAccountNumber = bank.getAccounts().get(keySet.get(from)).getAccNumber();
         String toAccountNumber = bank.getAccounts().get(keySet.get(to)).getAccNumber();
         try {
-            long amount = Math.round((Math.random() * bank.getBalance(fromAccountNumber)) / 10);
+            long amount = Math.round((Math.random() * bank.getBalance(fromAccountNumber)) / 100);
 
             bank.transfer(fromAccountNumber, toAccountNumber, amount);
 
@@ -68,16 +69,27 @@ public class BankTest extends TestCase {
     public void test_transfer_under_load() throws InterruptedException {
         long startSum = checkMoneySum();
         ExecutorService executorService = Executors.newFixedThreadPool(2);
-        for (int k = 0; k < 2; ++k) {
+
+        for (int l = 0; l < 10; l++) {
             executorService.submit(() -> {
-                for (int i = 0; i < 1000; ++i) {
+                for (int i = 0; i < 500; ++i) {
                     for (int j = 0; j < keySet.size() - 1; j++) {
                         transferRandomAmount(j, j + 1);
-                        System.out.println(Thread.currentThread().getName());
+                        System.err.println(Thread.currentThread().getName());
+                    }
+                }
+            });
+
+            executorService.submit(() -> {
+                for (int i = 0; i < 500; ++i) {
+                    for (int j = keySet.size(); j > 1; j--) {
+                        transferRandomAmount(j, j - 1);
+                        System.err.println(Thread.currentThread().getName());
                     }
                 }
             });
         }
+
         executorService.shutdown();
         executorService.awaitTermination(1, TimeUnit.HOURS);
         long endSum = checkMoneySum();
