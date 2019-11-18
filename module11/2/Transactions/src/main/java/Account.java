@@ -1,6 +1,6 @@
 public class Account implements Comparable<Account> {
 
-    private long money;
+    private volatile long money;
     private String accNumber;
     private volatile boolean isBlocked;
 
@@ -30,30 +30,30 @@ public class Account implements Comparable<Account> {
         return money;
     }
 
-    public synchronized void giveTransfer(long transferAmount) throws InterruptedException {
-        if (!this.isBlocked) {
-            if (money <= 0) {
-                System.out.println(this.getAccNumber() + " Account balance is to low");
-                wait();
-            }
+    public synchronized long giveTransfer(long transferAmount) throws InterruptedException {
+        if (money - transferAmount < 0) {
+            System.out.println(this.getAccNumber() + " Account balance is to low");
+            return 0;
+        } else if (!this.isBlocked) {
 
             this.money -= transferAmount;
-
+            return transferAmount;
 
         } else {
             System.out.println("Transfer from " + this.accNumber + " is forbidden.");
+            return 0;
         }
+
+
     }
 
-    public  synchronized void receiveTransfer(long transferAmount) {
+    public synchronized void receiveTransfer(long transferAmount) throws InterruptedException {
         if (!this.isBlocked) {
             this.money += transferAmount;
         } else {
             System.out.println("Transfer to " + this.accNumber + " is forbidden.");
         }
-        if (money > 0) {
-            notifyAll();
-        }
+
     }
 
     public String getAccNumber() {
