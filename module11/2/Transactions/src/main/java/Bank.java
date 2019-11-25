@@ -1,8 +1,11 @@
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Bank {
 
     private ConcurrentHashMap<String, Account> accounts;
+    private static final Object monitor = new Object();
+    private static boolean transferIIsComplete = true;
     //private final Random random = new Random();
     FraudControl fraudControl;
 
@@ -31,20 +34,25 @@ public class Bank {
      */
     public void transfer(String fromAccountNum, String toAccountNum, long amount)
         throws InterruptedException {
-        if (!accounts.get(fromAccountNum).isBlocked() && !accounts.get(toAccountNum).isBlocked()) {
+        transferIIsComplete = false;
+        synchronized (monitor) {
+            if (!accounts.get(fromAccountNum).isBlocked() && !accounts.get(toAccountNum)
+                .isBlocked()) {
+                if (amount > 50000 && fraudControl.isFraud(fromAccountNum, toAccountNum, amount)) {
+                    accounts.get(fromAccountNum).setBlocked(true);
+                    accounts.get(toAccountNum).setBlocked(true);
+                    System.out.println("Transfer from or to a blocked account is denied");
+                } else {
 
-            if (amount > 50000 && fraudControl.isFraud(fromAccountNum, toAccountNum, amount)) {
-                accounts.get(fromAccountNum).setBlocked(true);
-                accounts.get(toAccountNum).setBlocked(true);
-                System.out.println("Transfer from or to a blocked account is denied");
+                    accounts.get(toAccountNum)
+                        .receiveTransfer(accounts.get(fromAccountNum).giveTransfer(amount));
+
+                }
             } else {
-
-                accounts.get(toAccountNum)
-                    .receiveTransfer(accounts.get(fromAccountNum).giveTransfer(amount));
-
+                System.out.println("Transfer from or to a blocked account is denied");
             }
-        } else {
-            System.out.println("Transfer from or to a blocked account is denied");
+            transferIIsComplete = true;
+            monitor.notifyAll();
         }
     }
 
@@ -52,8 +60,16 @@ public class Bank {
      * TODO: реализовать метод. Возвращает остаток на счёте.
      */
     public long getBalance(String accountNum) throws InterruptedException {
-
-        return accounts.get(accountNum).getMoney();
+        synchronized (monitor) {
+            while (!transferIIsComplete) {
+                try {
+                    monitor.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return accounts.get(accountNum).getMoney();
+        }
 
     }
 

@@ -4,6 +4,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,12 +25,20 @@ public class BankTest extends TestCase {
         String fromAccountNumber = bank.getAccounts().get(keySet.get(from)).getAccNumber();
         String toAccountNumber = bank.getAccounts().get(keySet.get(to)).getAccNumber();
         try {
-            long amount = Math.round((Math.random() * bank.getBalance(fromAccountNumber)) / 100);
+            long amount = Math.round((Math.random() * bank.getBalance(fromAccountNumber)) / 10);
 
+            System.out.println(Thread.currentThread().getName() + " From account balance: " + bank
+                .getBalance(fromAccountNumber));
+            System.out.println(Thread.currentThread().getName() + " To account balance: " + bank
+                .getBalance(toAccountNumber));
             bank.transfer(fromAccountNumber, toAccountNumber, amount);
-
-            System.out.println(
+            System.out.println(Thread.currentThread().getName() +
                 "Transfering " + amount + " from " + fromAccountNumber + " to " + toAccountNumber);
+            System.out.println(Thread.currentThread().getName() + " From account balance: " + bank
+                .getBalance(fromAccountNumber));
+            System.out.println(Thread.currentThread().getName() + " To account balance: " + bank
+                .getBalance(toAccountNumber));
+            System.out.println("----------------------------------");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,9 +70,7 @@ public class BankTest extends TestCase {
             Account account = new Account();
             accounts.put(account.getAccNumber(), account);
         }
-        for (String s : accounts.keySet()) {
-            keySet.add(s);
-        }
+        keySet.addAll(accounts.keySet());
     }
 
     public void test_transfer_under_load() throws InterruptedException {
@@ -74,7 +81,8 @@ public class BankTest extends TestCase {
             executorService.submit(() -> {
                 for (int i = 0; i < 500; ++i) {
                     for (int j = 0; j < keySet.size() - 1; j++) {
-                        transferRandomAmount(j, j + 1);
+                        int receiver = (int) Math.round(keySet.size() * Math.random());
+                        transferRandomAmount(j, receiver);
                         System.err.println(Thread.currentThread().getName());
                     }
                 }
@@ -83,7 +91,8 @@ public class BankTest extends TestCase {
             executorService.submit(() -> {
                 for (int i = 0; i < 500; ++i) {
                     for (int j = keySet.size(); j > 1; j--) {
-                        transferRandomAmount(j, j - 1);
+                        int receiver = (int) Math.round(keySet.size() * Math.random());
+                        transferRandomAmount(j, receiver);
                         System.err.println(Thread.currentThread().getName());
                     }
                 }
