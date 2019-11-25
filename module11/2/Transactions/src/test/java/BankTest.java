@@ -5,7 +5,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -79,26 +78,26 @@ public class BankTest extends TestCase {
 
         for (int l = 0; l < 10; l++) {
             executorService.submit(() -> {
-                for (int i = 0; i < 500; ++i) {
-                    for (int j = 0; j < keySet.size() - 1; j++) {
-                        int giver = (int) Math.round(keySet.size() * Math.random());
-                        int receiver = (int) Math.round(keySet.size() * Math.random());
-                        transferRandomAmount(giver, receiver);
-                        System.err.println(Thread.currentThread().getName());
+                try {
+                    for (int i = 0; i < 500; ++i) {
+                        for (int j = 0; j < keySet.size() - 1; j++) {
+                            int giver = (int) Math.round(keySet.size() * Math.random());
+                            if (giver >= keySet.size()) {
+                                giver -= 1;
+                            }
+                            int receiver = (int) Math.round(keySet.size() * Math.random());
+                            if (receiver >= keySet.size()) {
+                                receiver -= 1;
+                            }
+                            transferRandomAmount(giver, receiver);
+                            System.err.println(Thread.currentThread().getName());
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
 
-            executorService.submit(() -> {
-                for (int i = 0; i < 500; ++i) {
-                    for (int j = keySet.size(); j > 1; j--) {
-                        int giver = (int) Math.round(keySet.size() * Math.random());
-                        int receiver = (int) Math.round(keySet.size() * Math.random());
-                        transferRandomAmount(giver, receiver);
-                        System.err.println(Thread.currentThread().getName());
-                    }
-                }
-            });
         }
 
         executorService.shutdown();
