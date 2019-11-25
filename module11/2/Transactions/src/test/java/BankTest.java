@@ -14,7 +14,7 @@ import org.junit.Before;
 
 public class BankTest extends TestCase {
 
-    private ConcurrentHashMap<String, Account> accounts;
+    private HashMap<String, Account> accounts;
     private ArrayList<String> keySet;
     private Bank bank;
 
@@ -25,7 +25,7 @@ public class BankTest extends TestCase {
         String fromAccountNumber = bank.getAccounts().get(keySet.get(from)).getAccNumber();
         String toAccountNumber = bank.getAccounts().get(keySet.get(to)).getAccNumber();
         try {
-            long amount = Math.round((Math.random() * bank.getBalance(fromAccountNumber)) / 10);
+            long amount = Math.round((Math.random() * bank.getBalance(fromAccountNumber)) / 100);
 
             System.out.println(Thread.currentThread().getName() + " From account balance: " + bank
                 .getBalance(fromAccountNumber));
@@ -63,7 +63,7 @@ public class BankTest extends TestCase {
         FraudControl mockFraudControl = mock(FraudControl.class);
         when(mockFraudControl.isFraud(anyString(), anyString(), anyLong())).thenReturn(false);
 
-        accounts = new ConcurrentHashMap<>();
+        accounts = new HashMap<>();
         bank = new Bank(accounts, mockFraudControl);
         keySet = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
@@ -81,8 +81,9 @@ public class BankTest extends TestCase {
             executorService.submit(() -> {
                 for (int i = 0; i < 500; ++i) {
                     for (int j = 0; j < keySet.size() - 1; j++) {
+                        int giver = (int) Math.round(keySet.size() * Math.random());
                         int receiver = (int) Math.round(keySet.size() * Math.random());
-                        transferRandomAmount(j, receiver);
+                        transferRandomAmount(giver, receiver);
                         System.err.println(Thread.currentThread().getName());
                     }
                 }
@@ -91,8 +92,9 @@ public class BankTest extends TestCase {
             executorService.submit(() -> {
                 for (int i = 0; i < 500; ++i) {
                     for (int j = keySet.size(); j > 1; j--) {
+                        int giver = (int) Math.round(keySet.size() * Math.random());
                         int receiver = (int) Math.round(keySet.size() * Math.random());
-                        transferRandomAmount(j, receiver);
+                        transferRandomAmount(giver, receiver);
                         System.err.println(Thread.currentThread().getName());
                     }
                 }

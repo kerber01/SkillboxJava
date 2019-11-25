@@ -3,18 +3,18 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Bank {
 
-    private ConcurrentHashMap<String, Account> accounts;
+    private HashMap<String, Account> accounts;
     private static final Object monitor = new Object();
-    private static boolean transferIIsComplete = true;
+    private static boolean transferIsComplete = true;
     //private final Random random = new Random();
     FraudControl fraudControl;
 
-    public Bank(ConcurrentHashMap<String, Account> accounts, FraudControl fraudControl) {
+    public Bank(HashMap<String, Account> accounts, FraudControl fraudControl) {
         this.accounts = accounts;
         this.fraudControl = fraudControl;
     }
 
-    public ConcurrentHashMap<String, Account> getAccounts() {
+    public HashMap<String, Account> getAccounts() {
         return accounts;
     }
 
@@ -34,8 +34,8 @@ public class Bank {
      */
     public void transfer(String fromAccountNum, String toAccountNum, long amount)
         throws InterruptedException {
-        transferIIsComplete = false;
-        synchronized (monitor) {
+        transferIsComplete = false;
+        synchronized (accounts.get(fromAccountNum)) {
             if (!accounts.get(fromAccountNum).isBlocked() && !accounts.get(toAccountNum)
                 .isBlocked()) {
                 if (amount > 50000 && fraudControl.isFraud(fromAccountNum, toAccountNum, amount)) {
@@ -51,8 +51,8 @@ public class Bank {
             } else {
                 System.out.println("Transfer from or to a blocked account is denied");
             }
-            transferIIsComplete = true;
-            monitor.notifyAll();
+//            transferIsComplete = true;
+//            monitor.notifyAll();
         }
     }
 
@@ -60,14 +60,14 @@ public class Bank {
      * TODO: реализовать метод. Возвращает остаток на счёте.
      */
     public long getBalance(String accountNum) throws InterruptedException {
-        synchronized (monitor) {
-            while (!transferIIsComplete) {
-                try {
-                    monitor.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+        synchronized (accounts.get(accountNum)) {
+//            while (!transferIsComplete) {
+//                try {
+//                    monitor.wait();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
             return accounts.get(accountNum).getMoney();
         }
 
