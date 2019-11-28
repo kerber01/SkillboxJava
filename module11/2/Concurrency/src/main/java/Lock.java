@@ -1,19 +1,17 @@
 public class Lock {
 
-    private Object monitor;
-    private boolean isLocked;
+    private volatile boolean isLocked;
 
     public Lock() {
-        monitor = new Object();
         isLocked = false;
     }
 
     public void lock() {
         if (!isLocked) {
-            synchronized (monitor) {
+            synchronized (this) {
                 while (isLocked) {
                     try {
-                        monitor.wait();
+                        this.wait();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -25,8 +23,8 @@ public class Lock {
 
     public void unlock() {
         if (isLocked) {
-            synchronized (monitor) {
-                monitor.notify();
+            synchronized (this) {
+                this.notify();
                 isLocked = false;
             }
         }
