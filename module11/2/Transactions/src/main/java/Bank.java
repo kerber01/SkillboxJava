@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class Bank {
 
@@ -35,24 +34,23 @@ public class Bank {
     public void transfer(String fromAccountNum, String toAccountNum, long amount)
         throws InterruptedException {
         transferIsComplete = false;
-        synchronized (accounts.get(fromAccountNum)) {
-            if (!accounts.get(fromAccountNum).isBlocked() && !accounts.get(toAccountNum)
-                .isBlocked()) {
+        Account from = accounts.get(fromAccountNum);
+        Account to = accounts.get(toAccountNum);
+        synchronized (fromAccountNum.compareTo(toAccountNum) > 0 ? from : to) {
+            if (!from.isBlocked() && !to.isBlocked()) {
                 if (amount > 50000 && fraudControl.isFraud(fromAccountNum, toAccountNum, amount)) {
-                    accounts.get(fromAccountNum).setBlocked(true);
-                    accounts.get(toAccountNum).setBlocked(true);
+                    from.setBlocked(true);
+                    to.setBlocked(true);
                     System.out.println("Transfer from or to a blocked account is denied");
                 } else {
 
                     accounts.get(toAccountNum)
-                        .receiveTransfer(accounts.get(fromAccountNum).giveTransfer(amount));
+                        .receiveTransfer(from.giveTransfer(amount));
 
                 }
             } else {
                 System.out.println("Transfer from or to a blocked account is denied");
             }
-//            transferIsComplete = true;
-//            monitor.notifyAll();
         }
     }
 
@@ -61,13 +59,6 @@ public class Bank {
      */
     public long getBalance(String accountNum) throws InterruptedException {
         synchronized (accounts.get(accountNum)) {
-//            while (!transferIsComplete) {
-//                try {
-//                    monitor.wait();
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
             return accounts.get(accountNum).getMoney();
         }
 

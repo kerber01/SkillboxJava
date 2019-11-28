@@ -26,18 +26,24 @@ public class BankTest extends TestCase {
         try {
             long amount = Math.round((Math.random() * bank.getBalance(fromAccountNumber)) / 100);
 
+            /*
             System.out.println(Thread.currentThread().getName() + " From account balance: " + bank
                 .getBalance(fromAccountNumber));
             System.out.println(Thread.currentThread().getName() + " To account balance: " + bank
                 .getBalance(toAccountNumber));
+
+             */
             bank.transfer(fromAccountNumber, toAccountNumber, amount);
-            System.out.println(Thread.currentThread().getName() +
+
+            /*System.out.println(Thread.currentThread().getName() +
                 "Transfering " + amount + " from " + fromAccountNumber + " to " + toAccountNumber);
             System.out.println(Thread.currentThread().getName() + " From account balance: " + bank
                 .getBalance(fromAccountNumber));
             System.out.println(Thread.currentThread().getName() + " To account balance: " + bank
                 .getBalance(toAccountNumber));
             System.out.println("----------------------------------");
+
+             */
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -76,7 +82,7 @@ public class BankTest extends TestCase {
         long startSum = checkMoneySum();
         ExecutorService executorService = Executors.newFixedThreadPool(2);
 
-        for (int l = 0; l < 10; l++) {
+        for (int l = 0; l < 1000; l++) {
             executorService.submit(() -> {
                 try {
                     for (int i = 0; i < 500; ++i) {
@@ -90,7 +96,7 @@ public class BankTest extends TestCase {
                                 receiver -= 1;
                             }
                             transferRandomAmount(giver, receiver);
-                            System.err.println(Thread.currentThread().getName());
+                            //System.err.println(Thread.currentThread().getName());
                         }
                     }
                 } catch (Exception e) {
@@ -103,7 +109,7 @@ public class BankTest extends TestCase {
         executorService.shutdown();
         executorService.awaitTermination(1, TimeUnit.HOURS);
         long endSum = checkMoneySum();
-        System.out.println("Start sum is " + startSum + ", end sum is " + endSum);
+        //System.out.println("Start sum is " + startSum + ", end sum is " + endSum);
         assertEquals(startSum, endSum);
 
     }
