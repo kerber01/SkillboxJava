@@ -14,13 +14,13 @@ public class Loader {
 
         ExecutorService service = Executors.newFixedThreadPool(2);
 
-        for (int j = 0; j < 10000; j++) {
+        for (int j = 0; j < 100000; j++) {
 
             service.submit(() -> {
                 changeI();
             });
         }
-        for (int j = 0; j < 10000; j++) {
+        for (int j = 0; j < 100000; j++) {
 
             service.submit(() -> {
                 changeK();
@@ -34,8 +34,12 @@ public class Loader {
     }
 
     private static void changeI() {
-        lock.lock();
-        lock.lock();
+
+        try {
+            lock.lock();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         i += 1;
 
@@ -48,10 +52,11 @@ public class Loader {
             k += i;
         } finally {
             lock.unlock();
-            lock.unlock();
-        }
 
+        }
     }
 
-
 }
+
+
+
