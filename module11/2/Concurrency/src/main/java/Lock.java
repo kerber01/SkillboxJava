@@ -1,7 +1,7 @@
 public class Lock {
 
     private boolean isLocked;
-    private boolean isCaught;
+    private String threadLockName;
     //private volatile int count;
 
     public Lock() {
@@ -9,15 +9,18 @@ public class Lock {
     }
 
     public void lock() {
-        synchronized (this) {
-            while (isLocked) {
-                try {
-                    this.wait();
-                } catch (Exception e) {
-                    e.printStackTrace();
+        if (!threadLockName.equals(Thread.currentThread().getName())) {
+            synchronized (this) {
+                while (isLocked) {
+                    try {
+                        this.wait();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+                isLocked = true;
+                threadLockName = Thread.currentThread().getName();
             }
-            isLocked = true;
         }
     }
 

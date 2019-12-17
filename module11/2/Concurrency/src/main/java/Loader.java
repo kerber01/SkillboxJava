@@ -16,11 +16,15 @@ public class Loader {
         service.submit(() -> {
             for (int j = 0; j < 100000; j++) {
                 lock.lock();
+                lock.lock();
+                lock.lock();
                 try {
                     i++;
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
+                    lock.unlock();
+                    lock.unlock();
                     lock.unlock();
                 }
             }
@@ -29,11 +33,15 @@ public class Loader {
         service.submit(() -> {
             for (int j = 0; j < 100000; j++) {
                 lock.lock();
+                lock.lock();
+                lock.lock();
                 try {
                     i--;
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
+                    lock.unlock();
+                    lock.unlock();
                     lock.unlock();
                 }
             }
