@@ -48,6 +48,7 @@ public class Loader {
         });
         service.shutdown();
         service.awaitTermination(1, TimeUnit.HOURS);
+        System.out.println(lock.getAcquisitionCount());
         System.out.println(i);
     }
 }
