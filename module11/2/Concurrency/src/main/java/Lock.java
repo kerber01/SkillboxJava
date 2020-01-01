@@ -14,10 +14,8 @@ public class Lock {
     }
 
     public void lock() {
-        if (!Thread.currentThread().equals(threadLock)) {
-            synchronized (this) {
-                System.out.println(Thread.currentThread().getName() + " acquired the lock \n"
-                    + "acquisition count = " + acquisitionCount);
+        synchronized (this) {
+            if (!Thread.currentThread().equals(threadLock)) {
                 while (isLocked) {
                     try {
                         this.wait();
@@ -27,21 +25,26 @@ public class Lock {
                 }
                 isLocked = true;
                 threadLock = Thread.currentThread();
+                System.out.println(Thread.currentThread().getName() + " acquired the lock \n"
+                    + "acquisition count = " + acquisitionCount);
+            } else {
+                acquisitionCount++;
+                System.out.println(Thread.currentThread().getName() + " holdCount++ (" + acquisitionCount+")");
             }
         }
-        acquisitionCount++;
     }
 
     public void unlock() {
         synchronized (this) {
-            isLocked = false;
-            acquisitionCount--;
-            System.out.println("acquisition count = " + acquisitionCount);
+            System.out.println(Thread.currentThread().getName() + "unlock attempt, acquisition count = " + acquisitionCount);
+            if (acquisitionCount > 0) {
+                acquisitionCount--;
+            }
             if (acquisitionCount == 0) {
+                isLocked = false;
                 this.notifyAll();
-                System.out.println(threadLock.getName() + " got out of critical section");
-                threadLock = null;
-                //acquisitionCount = 0;
+                System.out
+                    .println(Thread.currentThread().getName() + " got out of critical section\n");
             }
         }
     }
