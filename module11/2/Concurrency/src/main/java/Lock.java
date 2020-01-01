@@ -39,10 +39,10 @@ public class Lock {
             System.out.println(Thread.currentThread().getName() + "unlock attempt, acquisition count = " + acquisitionCount);
             if (acquisitionCount > 0) {
                 acquisitionCount--;
-            }
-            if (acquisitionCount == 0) {
+            } else if (acquisitionCount == 0){
                 isLocked = false;
                 this.notifyAll();
+                threadLock = null;
                 System.out
                     .println(Thread.currentThread().getName() + " got out of critical section\n");
             }
