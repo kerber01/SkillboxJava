@@ -50,8 +50,6 @@ public class Loader {
         service.awaitTermination(1, TimeUnit.HOURS);
         System.out.println(i);
     }
-
-
 }
 
 
