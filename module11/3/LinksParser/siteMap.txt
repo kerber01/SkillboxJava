@@ -92,7 +92,6 @@ https://skillbox.ru/
 			https://skillbox.ru/media/authors/aleksej-karelin/
 			https://skillbox.ru/media/authors/alexandra-evdokimova/
 			https://skillbox.ru/media/authors/anatoliy-alizar/
-			https://skillbox.ru/media/authors/andrey-konovalov/
 			https://skillbox.ru/media/authors/anna-polyakova/
 			https://skillbox.ru/media/authors/antonina-nikulina/
 			https://skillbox.ru/media/authors/artyom-kazakov/
@@ -176,7 +175,6 @@ https://skillbox.ru/
 			https://skillbox.ru/media/code/kak_ustanovit_lokalnyy_server_na_linux/
 			https://skillbox.ru/media/code/kak_ustanovit_lokalnyy_server_na_windows/
 			https://skillbox.ru/media/code/kak_vzlamyvayut_sayty_i_kak_ikh_ot_etogo_zashchitit/
-			https://skillbox.ru/media/code/kak_zashchitit_bazu_dannykh_v_c/
 			https://skillbox.ru/media/code/kak_zashchitit_sayt_ot_sql_inektsii/
 			https://skillbox.ru/media/code/kak_zastavit_sayt_gruzitsya_bystree/
 			https://skillbox.ru/media/code/mikhail_ovchinnikov_badoo_pervyy_sayt_ya_prodal_za_tysyachu_rubley/
@@ -190,6 +188,7 @@ https://skillbox.ru/
 			https://skillbox.ru/media/code/razrabotka_pod_android_tv/
 			https://skillbox.ru/media/code/razrabotka_pod_android_tv_part2/
 			https://skillbox.ru/media/code/sdvig_paradigmy_javascript/
+			https://skillbox.ru/media/code/si_sharp_dlya_novichkov_razveivaem_mify/
 			https://skillbox.ru/media/code/sozdayem_prostuyu_3d_gonku_na_unity/
 			https://skillbox.ru/media/code/stat_khoroshim_programmistom/
 			https://skillbox.ru/media/code/story_kalmykov/
@@ -284,8 +283,8 @@ https://skillbox.ru/
 			https://skillbox.ru/media/design/kak_sdelat_animatsiyu_dlya_sayta_v_after_effects/
 			https://skillbox.ru/media/design/kak_sdelat_dizayn_kontseptsiyu_sayta_esli_vy_novichok/
 			https://skillbox.ru/media/design/kak_sdelat_lending/
+			https://skillbox.ru/media/design/kak_sozdat_personazha_vosem_etapov/
 			https://skillbox.ru/media/design/kak_uluchshit_kachestvo_fotografii_v_photoshop/
-			https://skillbox.ru/media/design/kak_vybrat_graficheskiy_planshet_dlya_risovaniya/
 			https://skillbox.ru/media/design/kak_vybrat_i_sozdat_tsvetovuyu_skhemu_dlya_sayta/
 			https://skillbox.ru/media/design/kak_vybrat_napravlenie_v_dizayne/
 			https://skillbox.ru/media/design/kamera_v_after_effects/
@@ -389,6 +388,7 @@ https://skillbox.ru/
 			https://skillbox.ru/media/management/khochu_byt_menedzherom_proekta/
 			https://skillbox.ru/media/management/klientskiy_servis/
 			https://skillbox.ru/media/management/komyuniti_menedzher_nedootsenennaya_professiya/
+			https://skillbox.ru/media/management/kriterii_uspeshnogo_produkta/
 			https://skillbox.ru/media/management/matritsa_eyzenkhauera/
 			https://skillbox.ru/media/management/menedzheru_proektov_podpisatsya_v_facebook/
 			https://skillbox.ru/media/management/metod_smart_v_digital/
@@ -426,7 +426,6 @@ https://skillbox.ru/
 			https://skillbox.ru/media/marketing/12_podkastov_dlya_internet_marketologov/
 			https://skillbox.ru/media/marketing/15_seo_instrumentov/
 			https://skillbox.ru/media/marketing/19_prilozheniy_marketologu/
-			https://skillbox.ru/media/marketing/19_smertnykh_grekhov_intervyuera/
 			https://skillbox.ru/media/marketing/44_servisa_dlya_raboty_s_instagram/
 			https://skillbox.ru/media/marketing/4_reklamnye_kampanii_vdokhnovlennye_shedevrami/
 			https://skillbox.ru/media/marketing/50-istochnikov-tselevogo-trafika/
@@ -471,6 +470,7 @@ https://skillbox.ru/
 			https://skillbox.ru/media/marketing/kak_sozdavat_utm_metki_dlya_kampaniy_v_yandeks_direkt/
 			https://skillbox.ru/media/marketing/kak_stat_internet_marketologom/
 			https://skillbox.ru/media/marketing/kak_uznat_skorost_zagruzki_sayta/
+			https://skillbox.ru/media/marketing/kak_zanovo_vorvatsya_v_top/
 			https://skillbox.ru/media/marketing/kak_zapustit_reklamnoe_obyavlenie_s_lid_formoy_vkontakte/
 			https://skillbox.ru/media/marketing/kak_zastavit_google_polyubit_vash_sayt/
 			https://skillbox.ru/media/marketing/kakie_byvayut_crm_sistemy_i_kak_ikh_vybirat/

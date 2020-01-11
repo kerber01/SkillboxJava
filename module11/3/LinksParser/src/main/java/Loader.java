@@ -35,10 +35,18 @@ public class Loader {
         if (url.lastIndexOf("/") != (url.length() - 1)) {
             url += "/";
         }
-        System.out
-            .println(
-                "Введите количество создаваемых потоков: - > 0 установит значение по умолчанию.");
-        int numThreads = sc.nextInt();
+        int numThreads = 0;
+        while (true) {
+            System.out
+                .println(
+                    "Введите количество создаваемых потоков: - > 0 установит значение по умолчанию.");
+            String input = sc.nextLine();
+            if (input.matches("-?(0|[1-9]\\d*)")){
+                numThreads = Integer.parseInt(input);
+                break;
+            }
+            System.out.println("Неверный формат. Введите число...");
+        }
 
         System.out.println("Сканируем сайт...");
         long start = System.currentTimeMillis();
