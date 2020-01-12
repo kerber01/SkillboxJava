@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DefaultController {
 
     @RequestMapping("/")
-    public int index() {
-        return Runtime.getRuntime().availableProcessors();
+    public String index() {
+        return "Hello and welcome to my To Do List web application!";
     }
 }
