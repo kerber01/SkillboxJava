@@ -27,12 +27,12 @@ public class TaskController {
     }
 
     @GetMapping("/tasks/{id}")
-    public ResponseEntity getTaskById(@PathVariable int id) {
+    public ResponseEntity<Task> getTaskById(@PathVariable int id) {
         Task task = Storage.getTaskById(id);
         if (task == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return new ResponseEntity(task, HttpStatus.OK);
+        return new ResponseEntity<Task>(task, HttpStatus.OK);
     }
 
     @PutMapping("/tasks/{id}/desc")
