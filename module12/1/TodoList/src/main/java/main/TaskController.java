@@ -1,8 +1,6 @@
 package main;
 
 import java.util.List;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,36 +20,34 @@ public class TaskController {
     }
 
     @GetMapping("/tasks/")
-    public List<Task> getAllTasks() {
+    public List<Task> getAllTasks() throws NotFoundException {
         return Storage.getAllTasks();
     }
 
     @GetMapping("/tasks/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable int id) {
+    public Task getTaskById(@PathVariable int id) throws NotFoundException {
         Task task = Storage.getTaskById(id);
-        if (task == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        return new ResponseEntity<Task>(task, HttpStatus.OK);
+        return task;
     }
 
     @PutMapping("/tasks/{id}/desc")
-    public void editTaskDescription(@PathVariable int id, String newDescription) {
+    public void editTaskDescription(@PathVariable int id, String newDescription)
+        throws NotFoundException {
         Storage.editTaskDescription(id, newDescription);
     }
 
     @PutMapping("/tasks/{id}/priority")
-    public int editTaskPriority(@PathVariable int id, int priority) {
+    public int editTaskPriority(@PathVariable int id, int priority) throws NotFoundException {
         return Storage.editTaskPriority(id, priority);
     }
 
     @PutMapping("/tasks/{id}/name")
-    public void editTaskName(@PathVariable int id, String name) {
+    public void editTaskName(@PathVariable int id, String name) throws NotFoundException {
         Storage.editTaskName(id, name);
     }
 
     @PutMapping("/tasks/{id}/status")
-    public void editTaskStatus(@PathVariable int id, boolean status) {
+    public void editTaskStatus(@PathVariable int id, boolean status) throws NotFoundException {
         Storage.editTaskStatus(id, status);
     }
 
