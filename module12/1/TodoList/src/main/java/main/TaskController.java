@@ -12,22 +12,19 @@ import response.Task;
 @RestController
 public class TaskController {
 
-
     @PostMapping("/tasks/")
     public int addTask(Task task) {
-
         return Storage.addTask(task);
     }
 
     @GetMapping("/tasks/")
-    public List<Task> getAllTasks() throws NotFoundException {
+    public List<Task> getAllTasks() {
         return Storage.getAllTasks();
     }
 
     @GetMapping("/tasks/{id}")
-    public Task getTaskById(@PathVariable int id) throws NotFoundException {
-        Task task = Storage.getTaskById(id);
-        return task;
+    public Task getTaskById(@PathVariable int id) {
+        return Storage.getTaskById(id);
     }
 
     @PutMapping("/tasks/{id}/desc")
@@ -37,17 +34,17 @@ public class TaskController {
     }
 
     @PutMapping("/tasks/{id}/priority")
-    public int editTaskPriority(@PathVariable int id, int priority) throws NotFoundException {
+    public int editTaskPriority(@PathVariable int id, int priority) {
         return Storage.editTaskPriority(id, priority);
     }
 
     @PutMapping("/tasks/{id}/name")
-    public void editTaskName(@PathVariable int id, String name) throws NotFoundException {
+    public void editTaskName(@PathVariable int id, String name) {
         Storage.editTaskName(id, name);
     }
 
     @PutMapping("/tasks/{id}/status")
-    public void editTaskStatus(@PathVariable int id, boolean status) throws NotFoundException {
+    public void editTaskStatus(@PathVariable int id, boolean status) {
         Storage.editTaskStatus(id, status);
     }
 
