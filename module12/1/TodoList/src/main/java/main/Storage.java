@@ -3,7 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-import response.Task;
+import main.model.Task;
 
 public class Storage {
 
