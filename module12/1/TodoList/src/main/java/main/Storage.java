@@ -1,25 +1,23 @@
 package main;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import response.Task;
 
 public class Storage {
 
     private static int idCounter = 0;
-    private static HashMap<Integer, Task> tasks = new HashMap<>();
+    private static ConcurrentHashMap<Integer, Task> tasks = new ConcurrentHashMap<>();
 
     public static List<Task> getAllTasks() {
         if (tasks.size() == 0) {
             throw new NotFoundException("There are no tasks in the list");
         }
-        List<Task> taskList = new ArrayList<>();
-        taskList.addAll(tasks.values());
-        return taskList;
+        return new ArrayList<>(tasks.values());
     }
 
-    public static int addTask(Task task) {
+    public synchronized static int addTask(Task task) {
         idCounter++;
         task.setId(idCounter);
         tasks.put(idCounter, task);

@@ -27,7 +27,7 @@ public class Task {
         return taskName;
     }
 
-    public void setTaskName(String taskName) {
+    public synchronized void setTaskName(String taskName) {
         this.taskName = taskName;
     }
 
@@ -35,7 +35,7 @@ public class Task {
         return description;
     }
 
-    public void setDescription(String description) {
+    public synchronized void setDescription(String description) {
         this.description = description;
     }
 
@@ -43,15 +43,15 @@ public class Task {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public synchronized void setPriority(int priority) {
         this.priority = priority;
     }
 
-    public boolean isDone() {
+    public synchronized boolean isDone() {
         return done;
     }
 
-    public void setDone(boolean done) {
+    public synchronized void setDone(boolean done) {
         this.done = done;
         if (done) {
             setPriority(0);
