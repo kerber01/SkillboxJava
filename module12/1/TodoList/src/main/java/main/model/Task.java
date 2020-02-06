@@ -24,6 +24,9 @@ public class Task {
         this.done = false;
     }
 
+    public Task() {
+    }
+
     public int getId() {
         return id;
     }

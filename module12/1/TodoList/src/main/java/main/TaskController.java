@@ -1,61 +1,90 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import main.model.Task;
+import main.model.TaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
-import main.model.Task;
 
 @RestController
 public class TaskController {
 
+    @Autowired
+    private TaskRepository taskRepository;
+
     @PostMapping("/tasks/")
     public int addTask(Task task) {
-        return Storage.addTask(task);
+        Task newTask = taskRepository.save(task);
+        return newTask.getId();
     }
 
     @GetMapping("/tasks/")
     public List<Task> getAllTasks() {
-        return Storage.getAllTasks();
+        Iterable<Task> taskIterable = taskRepository.findAll();
+        ArrayList<Task> taskList = new ArrayList<>();
+
+        for (Task task : taskIterable) {
+            taskList.add(task);
+        }
+        return taskList;
     }
 
     @GetMapping("/tasks/{id}")
     public Task getTaskById(@PathVariable int id) {
-        return Storage.getTaskById(id);
+        Optional<Task> optionalTask = taskRepository.findById(id);
+        if (optionalTask.isEmpty()) {
+            throw new NotFoundException("id " + id + " is not found");
+        }
+        return optionalTask.get();
     }
 
     @PutMapping("/tasks/{id}/desc")
-    public void editTaskDescription(@PathVariable int id, String newDescription)
-        throws NotFoundException {
-        Storage.editTaskDescription(id, newDescription);
+    public void editTaskDescription(@PathVariable int id, String newDescription) {
+        Task newDescTask = getTaskById(id);
+        newDescTask.setDescription(newDescription);
+        taskRepository.save(newDescTask);
     }
 
     @PutMapping("/tasks/{id}/priority")
     public int editTaskPriority(@PathVariable int id, int priority) {
-        return Storage.editTaskPriority(id, priority);
+        Task task = getTaskById(id);
+        if (!task.isDone()) {
+            task.setPriority(priority);
+            taskRepository.save(task);
+            return priority;
+        }
+        return 0;
     }
 
     @PutMapping("/tasks/{id}/name")
     public void editTaskName(@PathVariable int id, String name) {
-        Storage.editTaskName(id, name);
+        Task newNameTask = getTaskById(id);
+        newNameTask.setTaskName(name);
+        taskRepository.save(newNameTask);
     }
 
     @PutMapping("/tasks/{id}/status")
     public void editTaskStatus(@PathVariable int id, boolean status) {
-        Storage.editTaskStatus(id, status);
+        Task newStatusTask = getTaskById(id);
+        newStatusTask.setDone(status);
+        taskRepository.save(newStatusTask);
     }
 
     @DeleteMapping("/tasks/{id}")
     public void deleteTask(@PathVariable int id) {
-        Storage.deleteTask(id);
+        taskRepository.delete(getTaskById(id));
     }
 
     @DeleteMapping("/tasks/")
     public void deleteAllTasks() {
-        Storage.deleteAllTask();
+        taskRepository.deleteAll();
     }
 
 }
