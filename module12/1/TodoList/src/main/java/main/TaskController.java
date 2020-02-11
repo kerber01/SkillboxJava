@@ -6,6 +6,7 @@ import java.util.Optional;
 import main.model.Task;
 import main.model.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Transactional(readOnly = true)
 public class TaskController {
 
     @Autowired
     private TaskRepository taskRepository;
 
     @PostMapping("/tasks/")
+    @Transactional(readOnly = false)
     public int addTask(Task task) {
         Task newTask = taskRepository.save(task);
         return newTask.getId();
@@ -46,6 +49,7 @@ public class TaskController {
     }
 
     @PutMapping("/tasks/{id}/desc")
+    @Transactional(readOnly = false)
     public void editTaskDescription(@PathVariable int id, String newDescription) {
         Task newDescTask = getTaskById(id);
         newDescTask.setDescription(newDescription);
@@ -53,6 +57,7 @@ public class TaskController {
     }
 
     @PutMapping("/tasks/{id}/priority")
+    @Transactional(readOnly = false)
     public int editTaskPriority(@PathVariable int id, int priority) {
         Task task = getTaskById(id);
         if (!task.isDone()) {
@@ -64,6 +69,7 @@ public class TaskController {
     }
 
     @PutMapping("/tasks/{id}/name")
+    @Transactional(readOnly = false)
     public void editTaskName(@PathVariable int id, String name) {
         Task newNameTask = getTaskById(id);
         newNameTask.setTaskName(name);
@@ -71,6 +77,7 @@ public class TaskController {
     }
 
     @PutMapping("/tasks/{id}/status")
+    @Transactional(readOnly = false)
     public void editTaskStatus(@PathVariable int id, boolean status) {
         Task newStatusTask = getTaskById(id);
         newStatusTask.setDone(status);
@@ -78,11 +85,13 @@ public class TaskController {
     }
 
     @DeleteMapping("/tasks/{id}")
+    @Transactional(readOnly = false)
     public void deleteTask(@PathVariable int id) {
         taskRepository.delete(getTaskById(id));
     }
 
     @DeleteMapping("/tasks/")
+    @Transactional(readOnly = false)
     public void deleteAllTasks() {
         taskRepository.deleteAll();
     }

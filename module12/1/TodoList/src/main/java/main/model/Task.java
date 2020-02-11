@@ -1,5 +1,6 @@
 package main.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,12 +10,19 @@ import javax.persistence.Id;
 public class Task {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "priority")
     private int priority;
+
+    @Column(name = "task_name")
     private String taskName;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "status")
     private boolean done;
 
     public Task(int priority, String taskName, String description) {
@@ -39,7 +47,7 @@ public class Task {
         return taskName;
     }
 
-    public synchronized void setTaskName(String taskName) {
+    public void setTaskName(String taskName) {
         this.taskName = taskName;
     }
 
@@ -47,7 +55,7 @@ public class Task {
         return description;
     }
 
-    public synchronized void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -55,15 +63,15 @@ public class Task {
         return priority;
     }
 
-    public synchronized void setPriority(int priority) {
+    public void setPriority(int priority) {
         this.priority = priority;
     }
 
-    public synchronized boolean isDone() {
+    public boolean isDone() {
         return done;
     }
 
-    public synchronized void setDone(boolean done) {
+    public void setDone(boolean done) {
         this.done = done;
         if (done) {
             setPriority(0);
