@@ -13,6 +13,7 @@
       <list>
         <option value="Class" />
         <option value="Interface" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -29,9 +30,13 @@
   <component name="ProjectId" id="1WIIEkTIMvNQ56PrQ0Y38V1VAhR" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\SkillboxJava\module12\1\TodoList\src\main\resources\templates" />
+    </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="main" />
     </key>

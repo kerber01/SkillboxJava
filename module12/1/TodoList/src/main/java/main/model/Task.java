@@ -5,8 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
 
 @Entity
+@Table(name = "tasks")
 public class Task {
 
     @Id
@@ -16,13 +19,13 @@ public class Task {
     @Column(name = "priority")
     private int priority;
 
-    @Column(name = "task_name")
+    @Column(name = "name")
     private String taskName;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "status")
+    @Column(name = "is_done")
     private boolean done;
 
     public Task(int priority, String taskName, String description) {
