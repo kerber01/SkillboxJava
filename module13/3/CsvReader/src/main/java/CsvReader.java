@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static com.mongodb.client.model.Filters.gt;
+import static com.mongodb.client.model.Sorts.*;
+
 public class CsvReader {
     public static void main(String[] args) {
         CsvReader reader = new CsvReader();
@@ -21,6 +24,13 @@ public class CsvReader {
             MongoCollection<Document> collection = database.getCollection("Students");
             List<Document> documentList = reader.parseStudents();
             collection.insertMany(documentList, new InsertManyOptions().ordered(false));
+
+
+            System.out.println(collection.countDocuments());
+            System.out.println(collection.find(gt("age", 40)).into(new ArrayList<>()).size());
+            System.out.println(collection.find().sort(orderBy(ascending("age"))).first().get("name"));
+            System.out.println(collection.find().sort(orderBy(descending("age"))).first().get("courses"));
+
         }
     }
 
@@ -32,9 +42,10 @@ public class CsvReader {
                     .lines()
                     .map(line -> {
                         String[] x = pattern.split(line);
-                        return new Document("name", x[0].split(",")[0]).append("age",
-                                Integer.parseInt(x[0].split(",")[1])).append("courses",
-                                Arrays.asList(x[1].replaceAll("\"", "").split(",")));
+                        return new Document()
+                                .append("name", x[0].split(",")[0])
+                                .append("age", Integer.parseInt(x[0].split(",")[1]))
+                                .append("courses", Arrays.asList(x[1].replaceAll("\"", "").split(",")));
                     })
                     .collect(Collectors.toList());
         } catch (IOException e) {
